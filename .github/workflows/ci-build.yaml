@@ -46,6 +46,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           nosetests -v --with-spec --spec-color --with-coverage --cover-package=service
 
       - name: Lint with flake8
