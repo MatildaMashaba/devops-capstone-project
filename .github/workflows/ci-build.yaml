@@ -44,6 +44,13 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h postgres -U postgres; do
+            echo "Waiting for Postgres..."
+            sleep 1
+          done
+
       - name: Run tests with coverage
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
@@ -57,4 +64,4 @@ jobs:
       - name: Run unit tests with nose
         run: nosetests
         env:
-          DATABASE_URI: "postgresql://postgres:pgs3cr3t@postgres:5432/postgres"
+          DATABASE_URI: "postgresql://postgres:postgres@postgres:5432/postgres"
