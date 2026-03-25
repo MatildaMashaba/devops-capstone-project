@@ -15,6 +15,8 @@ spec:
     - name: repo-url
     - name: branch
       default: main
+    - name: build-image
+      default: "my-image:latest"
   tasks:
     - name: init
       workspaces:
@@ -50,3 +52,16 @@ spec:
           value: "sqlite:///test.db"
       runAfter:
         - clone
+
+    - name: build
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+        - name: IMAGE
+          value: "$(params.build-image)"
+      runAfter:
+        - tests
