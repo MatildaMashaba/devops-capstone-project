@@ -63,5 +63,7 @@ spec:
       params:
         - name: IMAGE
           value: "$(params.build-image)"
+        - name: DOCKERFILE
+          value: "devops-capstone-project/dockerfile"
       runAfter:
         - tests
